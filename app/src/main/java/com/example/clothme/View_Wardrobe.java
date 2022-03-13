@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.clothme.Adapter.SpinnerAdapter;
 import com.example.clothme.Database.ClothesDB;
 import com.example.clothme.Models.ClothesModel;
 
@@ -27,12 +28,22 @@ public class View_Wardrobe extends AppCompatActivity {
     Button cancel,update;
     ImageView im;
     ClothesModel cm;
-    String[] TypeCat = new String[]{"Tshirts", "Kurtas", "Suits", "Coats", "Cardigans", "Sweatshirts", "Vests", "Tops", "Hoodies", "Sweaters", "Shirts", "Sherwanis",
-            "Jackets", "Innerwear Vests", "Tank Tops", "Gowns", "saree", "Churidar", "Dresses", "Jumpsuits", "Blazers", "T-Shirts", "Tunics", "Long Sleeves Shirt",
-            "dhoti_pants", "Lounge Pants", "Tracksuits", "Shirts", "Long Skirts", "Tights", "Shorts", "Knee Length Skirts", "Pajama",
-            "Mini Skirts", "Capri & Cropped Pants", "Jeans", "Pants", "Skirts", "Leggings", "Track Pants", "Pajamas", "palazzos", "Trousers"};
-    String[] FabricCat = new String[]{"Cotton", "Wool", "Nylon/Polyester", "Silk"};
-    String[] ColorCat = new String[]{"Null","Red","Blue","Green","Cyan","Magenta","Yellow"};
+    String[] TypeCat = new String[]{"Blazers","Cardigans","Jumpsuits","Tracksuits","T-Shirts","Tops","Shirts","Long Sleeves Shirt",
+            "Innerwear Vests","Tank Tops","Hoodies","Suits","Shirt","Dresses","Gowns","Coats","Sherwanis","Jackets","Sweaters",
+            "Sweatshirts","Vests","Pajama","Capri & Cropped Pants","Track Pants","Jeans","Tights","Shorts","Skirts","Lounge Pants","Trousers","Pants","Leggings"};
+    String[] FabricCat = new String[]{"Cotton", "Wool", "Nylon/Polyester", "Silk",};
+    String[] ColorCat = new String[]{"NULL","MediumOrchid","PaleGoldenRod","Black","DarkSeaGreen","LightSlateGray","Sienna","Gainsboro","LightCoral","Orange","DarkSlateGray",
+            "DodgerBlue","Aquamarine","LightSeaGreen","Beige","RoyalBlue","DarkViolet","MediumSlateBlue","OliveDrab","MidnightBlue","SandyBrown","Violet",
+            "LimeGreen","Magenta","PowderBlue","DarkSlateBlue","DeepSkyBlue","DarkTurquoise","Chartreuse","Olive","IndianRed","LightGray","PeachPuff",
+            "MediumPurple","Yellow","LightBlue","Indigo","SpringGreen","DarkRed","Peru","Wheat","RosyBrown","MediumAquaMarine","DarkCyan","FireBrick",
+            "LawnGreen","OrangeRed","DarkOrange","Teal","Turquoise","SeaShell","HoneyDew","Maroon","Cyan","Blue","Moccasin","Chocolate","WhiteSmoke",
+            "LightGoldenRodYellow","MediumSeaGreen","SeaGreen","Thistle","LavenderBlush","LightCyan","Red","SlateGray","MistyRose","Crimson","NavajoWhite",
+            "SlateBlue","Orchid","Tan","LightSalmon","DarkGray","Snow","DarkBlue","Fuchsia","Tomato","Plum","Cornsilk","PaleGreen","YellowGreen","MintCream",
+            "PaleVioletRed","DimGray","Gold","Azure","DarkOliveGreen","Gray","Salmon","LemonChiffon","FloralWhite","BlanchedAlmond","GreenYellow","Silver",
+            "Khaki","Pink","Ivory","LightSkyBlue","AliceBlue","DarkGreen","DarkSalmon","PapayaWhip","Linen","LightGreen","MediumTurquoise","AntiqueWhite",
+            "Brown","LightPink","OldLace","Aqua","DarkGoldenRod","Bisque","CadetBlue","BurlyWood","MediumBlue","BlueViolet","Lime","Lavender","CornflowerBlue",
+            "LightSteelBlue","GhostWhite","SteelBlue","MediumSpringGreen","DarkKhaki","PaleTurquoise","ForestGreen","DarkOrchid","DeepPink","MediumVioletRed",
+            "HotPink","LightYellow","Navy","SaddleBrown","White","Coral","Purple","DarkMagenta","GoldenRod","Green","SkyBlue"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +63,12 @@ public class View_Wardrobe extends AppCompatActivity {
         Uri uri = Uri.fromFile(f);
         im.setImageURI(uri);
 
+//        Toast.makeText(this,""+cm.getColor(),Toast.LENGTH_SHORT).show();
+
         ArrayAdapter<String> typeAdapter=new ArrayAdapter<>(View_Wardrobe.this, android.R.layout.simple_spinner_dropdown_item,TypeCat);
         type.setAdapter(typeAdapter);
         int pos=Arrays.asList(TypeCat).indexOf(cm.getClothtype());
-        Toast.makeText(this,""+pos,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this,""+pos,Toast.LENGTH_SHORT).show();
         type.setSelection(pos);
         type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -84,8 +97,11 @@ public class View_Wardrobe extends AppCompatActivity {
 
             }
         });
-        typeAdapter = new ArrayAdapter<>(View_Wardrobe.this, android.R.layout.simple_spinner_dropdown_item, ColorCat);
-        color.setAdapter(typeAdapter);
+//        typeAdapter = new ArrayAdapter<>(View_Wardrobe.this, android.R.layout.simple_spinner_dropdown_item, ColorCat);
+        SpinnerAdapter colorAdapter=new SpinnerAdapter(this,ColorCat);
+        color.setAdapter(colorAdapter);
+        pos=Arrays.asList(ColorCat).indexOf(cm.getColor());
+        color.setSelection(pos);
         color.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

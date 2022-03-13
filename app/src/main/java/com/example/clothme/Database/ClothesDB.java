@@ -18,6 +18,7 @@ import com.example.clothme.Models.ClothesModel;
 import com.example.clothme.Models.ImageModel;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,11 +27,11 @@ public class ClothesDB extends SQLiteOpenHelper {
     public static final String dbname = "database.db";
     public static final String TABLE_NAME = "clothesimage";
     public static final String TABLE_NAME_PARENT = "Accounts";
-    String[] TopWear = new String[]{"Tshirts", "Kurtas", "Suits", "Coats", "Cardigans", "Sweatshirts", "Vests", "Tops", "Hoodies", "Sweaters", "Shirts", "Sherwanis",
-            "Jackets", "Innerwear Vests", "Tank Tops", "Gowns", "saree", "Churidar", "Dresses", "Jumpsuits", "Blazers", "T-Shirts", "Tunics", "Long Sleeves Shirt"};
+    String[] TopWear = new String[]{"Blazers","Cardigans","Jumpsuits","Tracksuits","T-Shirts","Tops","Shirts","Long Sleeves Shirt",
+            "Innerwear Vests","Tank Tops","Hoodies","Suits","Shirt","Dresses","Gowns","Coats","Sherwanis","Jackets","Sweaters","Sweatshirts","Vests"};
 
-    String[] BottomWear = new String[]{"dhoti_pants", "Lounge Pants", "Tracksuits", "Shirts", "Long Skirts", "Tights", "Shorts", "Knee Length Skirts", "Pajama",
-            "Mini Skirts", "Capri & Cropped Pants", "Jeans", "Pants", "Skirts", "Leggings", "Track Pants", "Pajamas", "palazzos", "Trousers"};
+
+    String[] BottomWear = new String[]{"Pajama","Capri & Cropped Pants","Track Pants","Jeans","Tights","Shorts","Skirts","Lounge Pants","Trousers","Pants","Leggings"};
 
     public ClothesDB(@Nullable Context context) {
         super(context, dbname, null, 1);
@@ -71,8 +72,6 @@ public class ClothesDB extends SQLiteOpenHelper {
         } else {
             return true;
         }
-
-
     }
 
     public ArrayList<ImageModel> getImage(String username, String category, Context context) {
@@ -87,6 +86,10 @@ public class ClothesDB extends SQLiteOpenHelper {
                     im.setText(cursor.getString(2));
 //                    byte[] img = cursor.getBlob(1);
                     Uri imageUri = Uri.parse(cursor.getString(1));
+//                    File f=new File(imageUri.getPath());
+//                    if(f.exists()){
+//
+//                    }
                     Bitmap image = MediaStore.Images.Media.getBitmap(context.getContentResolver(), imageUri);
                     im.setPic(image);
                     if (cursor.getString(5).equals(category)) {
@@ -101,7 +104,6 @@ public class ClothesDB extends SQLiteOpenHelper {
         MyDB.close();
         return images;
     }
-
     public ClothesModel getCloth(String username, String Clothtype, int position) {
         SQLiteDatabase db = this.getReadableDatabase();//
         String cat = null;
